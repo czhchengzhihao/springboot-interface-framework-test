@@ -1,7 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.mapper1.TestMapper1;
-import com.example.demo.mapper2.TestMapper2;
+
+import com.example.demo.mapper.querybooks.QueryBooksMapper;
+import com.example.demo.mapper.responseresult.ResponseResultMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +16,13 @@ class DemoApplicationTests {
     }
 
     @Autowired
-    private TestMapper1 testMapper1;
+    private ResponseResultMapper responseResultMapper;
     @Autowired
-    private TestMapper2 testMapper2;
+    private QueryBooksMapper queryBooksMapper;
 
     @Test
     public void test1() {
-        System.out.println(testMapper1.queryResponseResult());
-        System.out.println(testMapper2.queryBooks());
+        System.out.println(responseResultMapper.queryResponseResult());
+        System.out.println(queryBooksMapper.queryBooks());
     }
 }

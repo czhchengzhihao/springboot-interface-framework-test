@@ -1,4 +1,5 @@
-package com.example.demo.config;
+package com.example.demo.datasourceconfig;
+
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -15,33 +16,41 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
+/**
+ * @Author ChengZhiHao
+ * @Description //TODO admin
+ * @Date 14:59 2022/5/17
+ * @Param
+ * @return
+ **/
 @Configuration
-@MapperScan(basePackages = {"com.example.demo.mapper1"}, sqlSessionFactoryRef = "test1SqlSessionFactory")
-public class ConfigDb01 {
-    @Bean(name = "test1DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.test1")
+@MapperScan(basePackages = {"com.example.demo.mapper.querybooks"}, sqlSessionFactoryRef = "ssmBuildSqlSessionFactory")
+public class QueryBooksDataSourceConfig {
+    @Bean(name = "ssmBuildDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.ssmbuild")
     @Primary
-    public DataSource testDataSource() {
+    public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "test1SqlSessionFactory")
-    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test1DataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "ssmBuildSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("ssmBuildDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "test1TransactionManager")
+    @Bean(name = "ssmBuildTransactionManager")
     @Primary
-    public DataSourceTransactionManager testTransactionManager(@Qualifier("test1DataSource") DataSource dataSource) {
+    public DataSourceTransactionManager transactionManager(@Qualifier("ssmBuildDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "test1SqlSessionTemplate")
+    @Bean(name = "ssmBuildSqlSessionTemplate")
     @Primary
-    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test1SqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("ssmBuildSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
+

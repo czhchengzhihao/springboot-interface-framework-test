@@ -1,5 +1,4 @@
-package com.example.demo.config;
-
+package com.example.demo.datasourceconfig;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -16,34 +15,40 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
+/**
+ * @Author ChengZhiHao
+ * @Description //TODO basePackages 对象相关mapper包
+ * @Date 15:00 2022/5/17
+ * @Param
+ * @return
+ **/
 @Configuration
-@MapperScan(basePackages = {"com.example.demo.mapper2"}, sqlSessionFactoryRef = "test2SqlSessionFactory")
-public class ConfigDb02 {
-    @Bean(name = "test2DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.test2")
+@MapperScan(basePackages = {"com.example.demo.mapper.responseresult"}, sqlSessionFactoryRef = "automationSqlSessionFactory")
+public class ResponseResultDataSourceConfig {
+    @Bean(name = "automationDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.automation")
     @Primary
-    public DataSource testDataSource() {
+    public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "test2SqlSessionFactory")
-    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test2DataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "automationSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("automationDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "test2TransactionManager")
     @Primary
-    public DataSourceTransactionManager testTransactionManager(@Qualifier("test2DataSource") DataSource dataSource) {
+    @Bean(name = "automationTransactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("automationDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "test2SqlSessionTemplate")
     @Primary
-    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test2SqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name = "automationSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("automationSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
-

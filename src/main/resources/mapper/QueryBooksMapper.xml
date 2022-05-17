@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.mapper2.TestMapper2">
-    <select id="queryBooks" resultType="com.example.demo.entity.Books">
+<mapper namespace="com.example.demo.mapper.querybooks.QueryBooksMapper">
+    <select id="queryBooks" resultType="java.awt.print.Book">
         SELECT *
         from books
     </select>

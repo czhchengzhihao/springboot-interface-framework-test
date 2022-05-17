@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+#配置数据库连接
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #数据源1
+    automation:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/automation?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+      username: root
+      password: admin123
+    #数据源2
+    ssmbuild:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/ssmbuild?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+      username: root
+      password: admin123
+#打印sql至控制台
+#logging:
+#  config: classpath:logback-spring.xml
+#  level:
+#    com.example.demo.mapper: DEBUG
+
+logging:
+  pattern:
+    console: "[%d] [%t] [%p] - %c:%L - %m%n"
+    level:
+      root: INFO
+
+  file:
+    name: logs/log.log
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+
+
+
+
+
+
+
+
