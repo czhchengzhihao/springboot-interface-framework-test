@@ -22,7 +22,7 @@ class DemoApplicationTests {
 
     @Test
     public void test1() {
-        System.out.println(responseResultMapper.queryResponseResult());
+        System.out.println(responseResultMapper.queryResponseResult("测试"));
         System.out.println(queryBooksMapper.queryBooks());
     }
 }

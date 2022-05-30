@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.responseresult.ResponseResultMapper">
     <select id="queryResponseResult" resultType="com.example.demo.entity.ResponseResult">
-        SELECT *
-        from response_result
+        SELECT success,message,responseData
+        from response_result where remark=#{remark}
     </select>
 </mapper>

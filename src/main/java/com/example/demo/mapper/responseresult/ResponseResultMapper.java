@@ -11,7 +11,6 @@ import java.util.List;
 @Mapper
 public interface ResponseResultMapper {
 
-
-    List<ResponseResult> queryResponseResult();
+    List<ResponseResult> queryResponseResult(String remark);
 
 }

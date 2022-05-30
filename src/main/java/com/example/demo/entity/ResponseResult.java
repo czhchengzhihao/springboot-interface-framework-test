@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @Author ChengZhiHao
  * @Description //TODO admin
@@ -15,8 +17,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ResponseResult {
-    private int id;
+
+    private Integer  id;
     private String success;
     private String message;
-    private String entity;
+    private String responseData;
+    private LocalDateTime creationTime;
+    private String remark;
 }

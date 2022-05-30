@@ -1,13 +1,22 @@
 package com.example.demo;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+
+import com.example.demo.entity.ResponseResult;
+import com.example.demo.httputil.HttpGetUtil;
 import com.example.demo.mapper.responseresult.ResponseResultMapper;
 import com.example.demo.mapper.querybooks.QueryBooksMapper;
 import com.example.demo.util.BaseCase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+
+import java.util.List;
 
 @Slf4j
 public class TestDemo extends BaseCase {
@@ -22,7 +31,7 @@ public class TestDemo extends BaseCase {
     @Test
     public void test1() {
 
-        log.info(JSONObject.toJSONString(responseResultMapper.queryResponseResult()));
+        //log.info(JSONObject.toJSONString(responseResultMapper.queryResponseResult()));
         log.info(JSONObject.toJSONString(queryBooksMapper.queryBooks()));
 
 
@@ -41,4 +50,50 @@ public class TestDemo extends BaseCase {
 
     }
 
+    @Test
+    public void test3() {
+        JSONObject jsonObject = HttpGetUtil.httpGet("testUrl", "aa");
+        System.out.println(jsonObject);
+    }
+
+    @Test
+    public void test4() {
+        List<ResponseResult> data = responseResultMapper.queryResponseResult("测试");
+        System.out.println(data + "aaaaaaa");
+        String s = JSONObject.toJSONString(data);
+        Object[][] dataS = new Object[JSONArray.parseArray(s).size()][JSONArray.parseArray(s).getJSONObject(0).size()];
+        System.out.println(JSONArray.parseArray(s).size()+"行");
+        System.out.println(JSONArray.parseArray(s).getJSONObject(0).size()+"列");
+        for (int i = 0; i < JSONArray.parseArray(s).size(); i++) {
+                for (int j = 0; j < JSONArray.parseArray(s).getJSONObject(i).size(); j++) {
+                    dataS[i][j]=JSONArray.parseArray(s).getJSONObject(i).getString("success");
+                }
+            }
+            for (Object[] objects : dataS) {
+                for (Object object : objects) {
+                    System.out.print("{" + object + "}");
+                }
+                System.out.println();
+            }
+
+
+
+
+      /*  Object[][] dataS = new Object[JSONArray.parseArray(s).size()][JSONArray.parseArray(s).getJSONObject(1).size()];
+        for (int i = 0; i < JSONArray.parseArray(s).size(); i++) {
+            JSONObject jsonObject = JSONArray.parseArray(s).getJSONObject(1);
+            for (int j = 0; j < JSONArray.parseArray(s).getJSONObject(i).size(); j++) {
+                JSONObject jsonObject1 = JSONArray.parseArray(s).getJSONObject(1);
+                dataS[i][j] = jsonObject1;
+            }
+            for (Object[] objects : dataS) {
+                for (Object object : objects) {
+                    System.out.print("{" + object + "}");
+                   // System.out.println(object);
+                }
+                System.out.println();
+            }
+        }*/
+
+    }
 }
