@@ -1,8 +1,9 @@
 package com.example.demo.mapper.querybooks;
 
+
+import com.example.demo.entity.Books;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -10,5 +11,5 @@ import java.util.List;
  */
 @Mapper
 public interface QueryBooksMapper {
-    List<Book> queryBooks();
+    List<Books> queryBooks();
 }

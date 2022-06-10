@@ -17,17 +17,16 @@ spring:
       jdbc-url: jdbc:mysql://localhost:3306/ssmbuild?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
       username: root
       password: admin123
-#打印sql至控制台
-#logging:
-#  config: classpath:logback-spring.xml
-#  level:
-#    com.example.demo.mapper: DEBUG
 
 logging:
+  #打印sql至控制台
+  level:
+    com.example.demo.mapper: DEBUG
+
   pattern:
     console: "[%d] [%t] [%p] - %c:%L - %m%n"
     level:
-      root: INFO
+      root: DEBUG
 
   file:
     name: logs/log.log
