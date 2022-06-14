@@ -30,9 +30,7 @@ logging:
 
   file:
     name: logs/log.log
-  logback:
-    rollingpolicy:
-      max-file-size: 100MB
+
 
 
 

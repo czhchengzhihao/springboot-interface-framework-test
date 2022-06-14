@@ -3,8 +3,10 @@ package com.example.demo.casedata;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.ResponseResult;
 import com.example.demo.mapper.responseresult.ResponseResultMapper;
+import com.example.demo.util.ReadDataBaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.DataProvider;
 
 import java.util.List;
 
@@ -18,15 +20,14 @@ import java.util.List;
  */
 @Slf4j
 public class TestCaseData {
-    private static ResponseResultMapper responseResultMapper;
 
-    public static Object[][] dataS() {
+    @Autowired
+    private ResponseResultMapper responseResultMapper;
+
+    @DataProvider(name = "bb")
+    public Object[][] yy() {
         List<ResponseResult> data = responseResultMapper.queryResponseResult("测试");
-        String s = JSONObject.toJSONString(data);
-        System.out.println(s+"1111111111111111111111");
-        Object[][] parse = JSONObject.parseObject(s, Object[][].class);
-        System.out.println(parse+"22222222222");
-        return parse;
+        String parameter = JSONObject.toJSONString(data);
+        return ReadDataBaseUtil.readDataBase(parameter);
     }
-
 }

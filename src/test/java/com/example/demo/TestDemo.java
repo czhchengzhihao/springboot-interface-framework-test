@@ -9,8 +9,10 @@ import com.example.demo.httputil.HttpGetUtil;
 import com.example.demo.mapper.responseresult.ResponseResultMapper;
 import com.example.demo.mapper.querybooks.QueryBooksMapper;
 import com.example.demo.util.BaseCase;
+import com.example.demo.util.ReadDataBaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
@@ -110,14 +112,11 @@ public class TestDemo extends BaseCase {
         System.out.println(JSONArray.parseArray(s).size() + "行");
         System.out.println(JSONArray.parseArray(s).getJSONObject(0).size() + "列");
         for (int i = 0; i < JSONArray.parseArray(s).size(); i++) {
-            JSONObject jsonObject = JSONArray.parseArray(s).getJSONObject(i);
-            System.out.println(jsonObject);
-            Set<String> strings = jsonObject.keySet();
-            int j = 1;
-            for (String string : strings) {
-                dataS[i][j++] = jsonObject.get(string).toString();
+            int j = 0;
+            Set<Map.Entry<String, Object>> entries = JSONArray.parseArray(s).getJSONObject(i).entrySet();
+            for (Map.Entry<String, Object> entry : entries) {
+                dataS[i][j++] = entry.getValue();
             }
-
         }
         for (Object[] objects : dataS) {
             for (Object object : objects) {
@@ -125,5 +124,46 @@ public class TestDemo extends BaseCase {
             }
             System.out.println();
         }
+
     }
+
+    @DataProvider(name = "bb")
+    public Object[][] yy() {
+        List<ResponseResult> data = responseResultMapper.queryResponseResult("测试");
+        String parameter = JSONObject.toJSONString(data);
+        return ReadDataBaseUtil.readDataBase(parameter);
+    }
+
+    @DataProvider(name = "aa")
+    public Object[][] test424() {
+        List<ResponseResult> data = responseResultMapper.queryResponseResult("测试");
+        System.out.println(data + "aaaaaaa");
+        String s = JSONObject.toJSONString(data);
+        System.out.println(JSONArray.parseArray(s).size() + "aaaa");
+        System.out.println(JSONArray.parseArray(s).getJSONObject(0).size() + "aaa");
+        Object[][] dataS = new Object[JSONArray.parseArray(s).size()][JSONArray.parseArray(s).getJSONObject(0).size()];
+        System.out.println(JSONArray.parseArray(s).size() + "行");
+        System.out.println(JSONArray.parseArray(s).getJSONObject(0).size() + "列");
+        for (int i = 0; i < JSONArray.parseArray(s).size(); i++) {
+            int j = 0;
+            Set<Map.Entry<String, Object>> entries = JSONArray.parseArray(s).getJSONObject(i).entrySet();
+            for (Map.Entry<String, Object> entry : entries) {
+                dataS[i][j++] = entry.getValue();
+            }
+        }
+        for (Object[] objects : dataS) {
+            for (Object object : objects) {
+                System.out.print("{" + object + "}");
+            }
+            System.out.println();
+        }
+        return dataS;
+    }
+
+    @Test(dataProvider = "bb")
+    public void test(String aa, String bb, String cc) {
+        log.info(aa + bb + cc);
+    }
+
+
 }
